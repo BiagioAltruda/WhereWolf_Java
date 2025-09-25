@@ -5,14 +5,14 @@ import game.lupus.enums.Faction;
 import game.lupus.model.Player;
 import jakarta.persistence.Column;
 
-public class Contadino extends Role {
+public class Lupo extends Role {
 
-    private final Faction faction = Faction.VILLAGGIO;
+    private final Faction faction = Faction.LUPI;
     @Column(name = "base_aura")
-    private final boolean aura = false;
+    private final boolean aura = true;
     @Column(name = "base_magic")
     private final boolean magic = false;
-    private final String description = "Contadino del villaggio, non ha poteri";
+    private final String description = "Lupo Mannaro, ogni notte a partire dalla seconda, decide un giocatore da eliminare";
 
     @Override
     public void vote() {

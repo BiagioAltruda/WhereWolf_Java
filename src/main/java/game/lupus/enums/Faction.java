@@ -1,4 +1,4 @@
-package game.lupus.model.roles;
+package game.lupus.enums;
 
 public enum Faction {
     VILLAGGIO, LUPI, VAMPIRO

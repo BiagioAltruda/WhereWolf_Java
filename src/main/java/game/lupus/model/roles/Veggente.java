@@ -5,14 +5,14 @@ import game.lupus.enums.Faction;
 import game.lupus.model.Player;
 import jakarta.persistence.Column;
 
-public class Contadino extends Role {
+public class Veggente extends Role{
 
     private final Faction faction = Faction.VILLAGGIO;
     @Column(name = "base_aura")
     private final boolean aura = false;
     @Column(name = "base_magic")
-    private final boolean magic = false;
-    private final String description = "Contadino del villaggio, non ha poteri";
+    private final boolean magic = true;
+    private final String description = "Veggente del villaggio, ogni notte scopre l'aura di un giocatore in vita";
 
     @Override
     public void vote() {

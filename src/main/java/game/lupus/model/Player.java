@@ -1,14 +1,17 @@
 package game.lupus.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import game.lupus.enums.Status;
+import game.lupus.model.roles.Role;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @Entity
+@Table(name = "players")
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,5 +22,16 @@ public class Player {
     @GeneratedValue
     private Integer id;
     private String username;
-    private String role;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Role role;
+    @Column(name = "is_alive")
+    private boolean isAlive;
+    @Column(name = "current_aura")
+    private int aura;
+    @Column(name = "current_magic")
+    private int magic;
+    @Column(name = "status")
+    private ArrayList<Status> statuses = new ArrayList<>();
 }
