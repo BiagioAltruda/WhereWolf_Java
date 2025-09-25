@@ -12,16 +12,18 @@ import java.util.ArrayList;
 
 @Entity
 @Table(name = "players")
-@RequiredArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@RequiredArgsConstructor
+@NoArgsConstructor 
 public class Player {
 
     @Id
     @GeneratedValue
     private Integer id;
     private String username;
+    private boolean passed;
+
 
     @ManyToOne
     @JoinColumn(name = "id")
@@ -34,4 +36,5 @@ public class Player {
     private int magic;
     @Column(name = "status")
     private ArrayList<Status> statuses = new ArrayList<>();
+
 }
