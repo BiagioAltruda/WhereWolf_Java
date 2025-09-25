@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "players")
 @RequiredArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Getter
 @Setter
 public class Player {
@@ -22,6 +22,8 @@ public class Player {
     @GeneratedValue
     private Integer id;
     private String username;
+    private boolean passed;
+
 
     @ManyToOne
     @JoinColumn(name = "id")
@@ -34,4 +36,14 @@ public class Player {
     private int magic;
     @Column(name = "status")
     private ArrayList<Status> statuses = new ArrayList<>();
+
+    public boolean isPassed() {
+        return passed;
+    }
+
+    public void setPassed(boolean passed) {
+        this.passed = passed;
+    }
+
+
 }
