@@ -31,16 +31,24 @@
 	</properties>
 	<dependencies>
 	
-	<!-- JavaFX dependencies -->
-    <dependency>
+	<!-- JavaFX -->
+<dependency>
     <groupId>org.openjfx</groupId>
     <artifactId>javafx-controls</artifactId>
     <version>25</version>
     <classifier>win</classifier>
 </dependency>
+
 <dependency>
     <groupId>org.openjfx</groupId>
     <artifactId>javafx-fxml</artifactId>
+    <version>25</version>
+    <classifier>win</classifier>
+</dependency>
+
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-media</artifactId>
     <version>25</version>
     <classifier>win</classifier>
 </dependency>
