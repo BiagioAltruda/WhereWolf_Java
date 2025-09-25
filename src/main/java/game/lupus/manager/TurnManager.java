@@ -2,6 +2,11 @@ package game.lupus.manager;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import lombok.Setter;
+import lombok.Getter;
+
+@Getter
+@Setter
 public class TurnManager {
 
     private int currentTurn;
@@ -27,6 +32,19 @@ public class TurnManager {
         return isNight;
     }
 
+    private void currentTurn(){
+
+        if(isNight)
+        {
+            // implementare controller API con metodi per la notte
+        } 
+        else 
+        {
+            // implementare controller API con metodi per il giorno
+        }
+        turnController();
+    }
+
     public void nextTurn() {
         currentTurn++;
         isNight = !isNight;
@@ -37,7 +55,7 @@ public class TurnManager {
     public void update() {
         Thread updateThread = new Thread(() -> {
             while (true) {
-                turnController(); 
+                currentTurn();
                 //Implementare una stampa sull'interfaccia del countdown
                 try {
                     Thread.sleep(16); 
@@ -48,12 +66,14 @@ public class TurnManager {
         });
         updateThread.setDaemon(true); 
         updateThread.start();
+        
     }
 
     private void turnController() {
 
         timeController();
 
+            //aggiungere un controllo sul timer 
         if (allPlayersPassed()) {
             GameManager.instance.getPlayers().forEach(player -> player.setPassed(false));
             nextTurn();
@@ -82,8 +102,9 @@ public class TurnManager {
         return String.format("%02d:%02d", minutes, seconds);
     }
 
+
     private void timeController() {
-        
+        // occupa la stampa a video del timer
     }
 
 }

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 @Entity
 @Table(name = "players")
-@RequiredArgsConstructor
-//@NoArgsConstructor
 @Getter
 @Setter
+@RequiredArgsConstructor
+@NoArgsConstructor 
 public class Player {
 
     @Id
@@ -36,14 +36,5 @@ public class Player {
     private int magic;
     @Column(name = "status")
     private ArrayList<Status> statuses = new ArrayList<>();
-
-    public boolean isPassed() {
-        return passed;
-    }
-
-    public void setPassed(boolean passed) {
-        this.passed = passed;
-    }
-
 
 }
