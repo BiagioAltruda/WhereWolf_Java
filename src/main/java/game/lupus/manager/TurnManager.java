@@ -71,7 +71,7 @@ public class TurnManager {
                     
                 //Implementare una stampa sull'interfaccia del countdown
                 try {
-                    Thread.sleep(16); 
+                    Thread.sleep(500); 
                 } catch (InterruptedException e) {
                     break;
                 }
@@ -92,11 +92,11 @@ public class TurnManager {
 
         //non entra qua dentro
         GameManager.instance.getPlayers().forEach(player -> { 
-            System.out.println(player.getUsername() + " passed: " + player.hasPassed());
+           // System.out.println(player.getUsername() + " passed: " + player.hasPassed());
             if (!player.hasPassed()) { 
                 allPassed.set(false);
 
-                System.out.println("Metto a falso : "+allPassed.getAcquire());
+             //   System.out.println("Has everyone completed their turn? : "+allPassed.getAcquire());
             }
         });
 

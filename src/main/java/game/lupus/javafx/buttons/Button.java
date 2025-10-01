@@ -3,15 +3,17 @@ package game.lupus.javafx.buttons;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class ButtonTest {
+public class Button {
 	
 	private double x, y, width, height; 
 	
 	private String text;
 	
 	private Runnable action;
+	
+	private boolean isPressed = false;
 
-	public ButtonTest(double x, double y, double width, double height, String text, Runnable action) {
+	public Button(double x, double y, double width, double height, String text, Runnable action) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -22,9 +24,10 @@ public class ButtonTest {
 	}
 	
 	public void render(GraphicsContext gc, double mouseX, double mouseY) {
-	    boolean hovered = isHovered(mouseX, mouseY);
+		
+	    boolean isHovered = isMouseOver(mouseX, mouseY);
 	    
-	    if(hovered) {
+	    if(isHovered) {
 	    	gc.setFill(Color.LIGHTGREEN);
 	    } else {
 	    	gc.setFill(Color.LIGHTGRAY);
@@ -38,20 +41,20 @@ public class ButtonTest {
 	    gc.fillText(text, x + 10, y + height / 2 + 5);
 	}
 	
-	
 	/*
 	   JavaFX mouse event listeners.
     JavaFX has built-in methods that detect mouse movement and clicks on Canvas
     such a blessing huh? / 
 	 * 
 	 */
-	public boolean isHovered(double mouseX, double mouseY) {
+	public boolean isMouseOver(double mouseX, double mouseY) {
         return mouseX >= x && mouseX <= x + width &&
                mouseY >= y && mouseY <= y + height;
     }
 
     public void onClick() {
-        if (action != null) action.run();
+		if (action != null)
+			action.run();
     }
 
 	public double getX() {
@@ -100,6 +103,14 @@ public class ButtonTest {
 
 	public void setAction(Runnable action) {
 		this.action = action;
+	}
+
+	public boolean isPressed() {
+		return isPressed;
+	}
+
+	public void setPressed(boolean isPressed) {
+		this.isPressed = isPressed;
 	} 
 	
 

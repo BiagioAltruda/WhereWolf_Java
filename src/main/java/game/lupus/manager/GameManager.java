@@ -6,7 +6,8 @@ import game.lupus.model.Player;
 import lombok.Getter;
 import lombok.Setter;
 
-
+@Getter
+@Setter
 public class GameManager {
 
     public final static GameManager instance = new GameManager();
@@ -14,7 +15,7 @@ public class GameManager {
     private List<Player> players; // Placeholder for player objects
 
     public void setPlayers(Player...players) {
-        this.players =List.of(players);
+        this.players = List.of(players);
     }
 
     public GameManager(Player... players) {
