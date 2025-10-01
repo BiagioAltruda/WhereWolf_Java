@@ -48,7 +48,6 @@ public class TurnManager {
         {
             // implementare controller API con metodi per il giorno
         }
-        turnController();
     }
 
     public void nextTurn() {
@@ -62,10 +61,14 @@ public class TurnManager {
     public void update() {
         Thread updateThread = new Thread(() -> {
             while (true) {
+                allPlayersPassed();
                 if (timeController().equals("00:00"))
                     nextTurn();
-                if (passedController())
+                if (passedController()){
                     nextTurn();
+                    GameManager.instance.getPlayers().forEach(player -> player.setPassed(false));
+                }
+                    
                 //Implementare una stampa sull'interfaccia del countdown
                 try {
                     Thread.sleep(16); 
@@ -83,21 +86,6 @@ public class TurnManager {
        if (this.allPassed.get() == true)
             return true;
         return false;
-    }
-
-
-    private void turnController() {
-
-            //aggiungere un controllo sul timer 
-        System.out.println("Prima del controllo");
-        if (allPlayersPassed()) {
-            System.out.println("All players have passed. Moving to next turn.");
-            GameManager.instance.getPlayers().forEach(player -> player.setPassed(false));
-            nextTurn();
-        }
-        else {
-            System.out.println("Not all players have passed yet.");
-        }
     }
 
     private boolean allPlayersPassed() {
