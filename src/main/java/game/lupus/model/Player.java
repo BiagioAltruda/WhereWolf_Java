@@ -1,3 +1,4 @@
+
 package game.lupus.model;
 
 import game.lupus.enums.Status;
@@ -45,3 +46,4 @@ public class Player {
         return passed;
     }
 }
+

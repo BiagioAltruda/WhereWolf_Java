@@ -3,7 +3,6 @@ package game.lupus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import game.lupus.javafx.JavaFXTest;
 import game.lupus.javafx.JavaFXTestGame;
 
 @SpringBootApplication
