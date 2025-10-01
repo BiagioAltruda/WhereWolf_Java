@@ -13,14 +13,20 @@ public class TurnManager {
     private boolean isNight;
     private final int turnMinutes = 7; // Minuti totali di un turno
     private long turnStartTime; // Timestamp di inizio turno
-    
+    private AtomicBoolean allPassed;
 
+    // riscrivere il thread, aggiungiere una variabile AtomicBolean per AllPassed nella classe; nel thread fare controllo solo sulla variabile e sul timer
+    
+    public final static TurnManager instance = new TurnManager();
 
     public TurnManager() {
-        this.currentTurn = 0;
+        this.currentTurn = 1;
         this.isNight = false;
         this.turnStartTime = System.currentTimeMillis();
+        this.allPassed = new AtomicBoolean(false);
+        currentTurn();
         update();
+        
     }
     
 
@@ -49,13 +55,17 @@ public class TurnManager {
         currentTurn++;
         isNight = !isNight;
         turnStartTime = System.currentTimeMillis(); // reset timer
+        currentTurn();
     }
 
 
     public void update() {
         Thread updateThread = new Thread(() -> {
             while (true) {
-                currentTurn();
+                if (timeController().equals("00:00"))
+                    nextTurn();
+                if (passedController())
+                    nextTurn();
                 //Implementare una stampa sull'interfaccia del countdown
                 try {
                     Thread.sleep(16); 
@@ -69,26 +79,40 @@ public class TurnManager {
         
     }
 
+    private boolean passedController() {
+       if (this.allPassed.get() == true)
+            return true;
+        return false;
+    }
+
+
     private void turnController() {
 
-        timeController();
-
             //aggiungere un controllo sul timer 
+        System.out.println("Prima del controllo");
         if (allPlayersPassed()) {
+            System.out.println("All players have passed. Moving to next turn.");
             GameManager.instance.getPlayers().forEach(player -> player.setPassed(false));
             nextTurn();
+        }
+        else {
+            System.out.println("Not all players have passed yet.");
         }
     }
 
     private boolean allPlayersPassed() {
-        AtomicBoolean allPassed = new AtomicBoolean(true);
-        
-        GameManager.instance.getPlayers().forEach(player -> {
-            if (!player.isPassed()) {
+
+        //non entra qua dentro
+        GameManager.instance.getPlayers().forEach(player -> { 
+            System.out.println(player.getUsername() + " passed: " + player.hasPassed());
+            if (!player.hasPassed()) { 
                 allPassed.set(false);
+
+                System.out.println("Metto a falso : "+allPassed.getAcquire());
             }
         });
-        return allPassed.get();
+
+        return allPassed.getAcquire();
     }
 
     // Mostra il countdown in tempo reale dei 7 minuti
@@ -103,8 +127,8 @@ public class TurnManager {
     }
 
 
-    private void timeController() {
-        // occupa la stampa a video del timer
+    public String timeController() {
+        return getTurnCountdown();
     }
 
 }

@@ -40,4 +40,8 @@ public class Player {
     @Column(name = "status")
     private ArrayList<Status> statuses = new ArrayList<>();
 
+
+    public boolean hasPassed() {
+        return passed;
+    }
 }
