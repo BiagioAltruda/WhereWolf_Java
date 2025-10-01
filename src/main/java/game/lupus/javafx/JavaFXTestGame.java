@@ -13,6 +13,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class JavaFXTestGame extends Application{
@@ -35,7 +36,30 @@ public class JavaFXTestGame extends Application{
         primaryStage.show();
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        
 
+        Player p1 = new Player();
+        p1.setUsername("Bardo");
+        p1.setId(1);
+        p1.setPassed(false);
+
+        Player p2 = new Player();
+        p2.setUsername("Lupo");
+        p2.setId(2);
+        p2.setPassed(false);
+        
+        Player p3 = new Player();
+        p3.setUsername("Luce");
+        p3.setId(3);
+        p3.setPassed(false);
+        
+        Player p4= new Player();
+        p4.setUsername("Biagi");
+        p4.setId(4);
+        p4.setPassed(false);
+        
+        GameManager.instance.setPlayers(p1, p2, p3, p4);
+        
          // Animation loop
         new AnimationTimer() {
             @Override
@@ -43,7 +67,6 @@ public class JavaFXTestGame extends Application{
                 double w = canvas.getWidth();
                 double h = canvas.getHeight();
 
-                // Clear and redraw everything every frame
                 gc.setFill(Color.DARKSLATEBLUE);
                 gc.fillRect(0, 0, w, h);
 
@@ -58,28 +81,23 @@ public class JavaFXTestGame extends Application{
                 gc.fillText(TurnManager.instance.timeController() + "", 20 , 90);
 
                 gc.fillText("Manche : " + TurnManager.instance.getCurrentTurn() + "", 20, 60);
-
-                gc.setFill(Color.RED);
-                gc.fillOval(w / 2 - 50, h / 2 - 50, 100, 100); // center object
-
                 
-               
+                int x = 100; 
+            	int y = 500;
+            	gc.setFont(new Font("Arial", 24));
+                for(int i = 0; i<GameManager.instance.getPlayers().size(); i++) {
+                	gc.setFill(Color.BLACK);
+
+                	gc.fillText(GameManager.instance.getPlayers().get(i).getUsername() , x, y-50);
+                	gc.setFill(Color.RED);
+                	
+                    gc.fillOval(x, y, 100, 100); // center object
+                    x = x + 150; 
+                } 
             }
         }.start();
 
 
-                Player p1 = new Player();
-                p1.setUsername("Bardo");
-                p1.setId(1);
-                p1.setPassed(false);
-
-                Player p2 = new Player();
-                p2.setUsername("Lupo");
-                p2.setId(2);
-                p2.setPassed(false);
-
-
-                GameManager.instance.setPlayers(p1, p2);
         
     }
 
