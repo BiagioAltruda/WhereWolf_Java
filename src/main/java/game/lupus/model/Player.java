@@ -48,11 +48,13 @@ public class Player {
 	 * START TESTING AREA
 	 * 
 	 */
-	Button btn;
+	
 	private double playerX;
 	private double playerY;
 	private final int width = 100;
 	private final int height = 100;
+	
+	// name subject to change, checked is too see if the mouse is hovering or not
 	private boolean checked = false;
 	
 	private Runnable action = new Runnable(){

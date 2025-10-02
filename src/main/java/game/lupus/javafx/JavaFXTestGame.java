@@ -29,14 +29,6 @@ public class JavaFXTestGame extends Application {
 	private double mouseX = 0;
 	private double mouseY = 0;
 
-	// button
-	Button voteButton = new Button(200, 100, 70, 35, "Vote", () -> {
-		System.out.println("Vote clicked!");
-
-		// method that blasts the selected player, for testing purpouses the three other
-		// player will not vote
-	});
-
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 
@@ -51,6 +43,7 @@ public class JavaFXTestGame extends Application {
 		/*
 		 * TESTING BLOCK WITH HARD CODED players
 		 */
+
 		Player p1 = new Player();
 		p1.setUsername("Bardo");
 		p1.setId(1);
@@ -78,6 +71,22 @@ public class JavaFXTestGame extends Application {
 		// chiamare ogni volta con GAMEMANAGER.INSTANCE.NEGRO...
 		int lobbySize = GameManager.instance.getPlayers().size();
 
+		// VOTE BUTTON
+		Button voteButton = new Button(200, 100, 70, 35, "Vote", () -> {
+			int i;
+			for (i = 0; i < lobbySize; i++) {
+				if (GameManager.instance.getPlayers().get(i).isChecked()) {
+					System.out.println("You voted " + GameManager.instance.getPlayers().get(i).getUsername());
+					p1.setPassed(true);
+					break;
+				} 	
+			}
+			
+			if(i == lobbySize) {
+				System.out.println("You must select a player before voting, if you do not wish to vote you can abstain");
+			}			
+		});
+
 		// JavaFX offers mouse properties yayy huh? /
 		canvas.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
@@ -88,6 +97,7 @@ public class JavaFXTestGame extends Application {
 		});
 
 		canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
 			@Override
 			public void handle(MouseEvent e) {
 
@@ -96,19 +106,19 @@ public class JavaFXTestGame extends Application {
 				}
 
 				for (int i = 0; i < lobbySize; i++) {
-					
+
 					if (GameManager.instance.getPlayers().get(i).isMouseOver(e.getX(), e.getY())) {
 						GameManager.instance.getPlayers().get(i).onClick();
-						
+
 						/*
-						 * non mi viene in mente altro, siccome lobbySize non toccherà nemmeno i 2 zeri, un
-						 * O n al quadrato non dovrebbe rallentare
+						 * non mi viene in mente altro, siccome lobbySize non toccherà nemmeno i 2 zeri,
+						 * un O n al quadrato non dovrebbe rallentare
 						 */
 						for (int j = 0; j < lobbySize; j++) {
 							// if i and j are the same, therefore the same player nothing happens
 							// otherwise it sets it's isChecked to false;
-							if (j != i) 
-							GameManager.instance.getPlayers().get(j).setChecked(false);				
+							if (j != i)
+								GameManager.instance.getPlayers().get(j).setChecked(false);
 						}
 					}
 
@@ -117,8 +127,8 @@ public class JavaFXTestGame extends Application {
 		});
 
 		/*
-		 * setOnMouseMoved / setOnMouseClicked notes ABOVE TRADITIONAL VERSION BELOW (
-		 * IN COMMENT ) LAMBDA VERSION the traditional version is more verbose, but it's
+		 * setOnMouseMoved / setOnMouseClicked notes ABOVE TRADITIONAL VERSION BELOW (IN
+		 * COMMENT ) LAMBDA VERSION the traditional version is more verbose, but it's
 		 * easier to understand and debug imo
 		 */
 //		canvas.setOnMouseMoved(e -> {
@@ -178,6 +188,8 @@ public class JavaFXTestGame extends Application {
 
 					GameManager.instance.getPlayers().get(i).render(gc, mouseX, mouseY);
 					x = x + 150;
+					
+				
 				}
 			}
 		}.start();
