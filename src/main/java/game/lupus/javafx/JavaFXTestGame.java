@@ -20,8 +20,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class JavaFXTestGame extends Application {
-	
-	// window e mouse dovrebbero essere fissi
+
 	// window
 	private final int windowWidth = 1280;
 	private final int windowHeight = 720;
