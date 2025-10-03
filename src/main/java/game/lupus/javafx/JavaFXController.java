@@ -83,5 +83,4 @@ public class JavaFXController implements Initializable{
 		}
 	}
 
-	
-}
+}	
