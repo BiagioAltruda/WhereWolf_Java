@@ -48,6 +48,7 @@ public class Player {
 	 * -----------------------------------------------------
 	 * START TESTING AREA
 	 * 
+	 * ** NOTES, WHEN SPLITTING THIS CLASS, SOMEHOW MAKE IT CLEANER, this is somewhat messy
 	 */
 	
 //	private double playerX;
@@ -113,7 +114,7 @@ public class Player {
 
 	public void render(GraphicsContext gc, double mouseX, double mouseY, double playerX, double playerY) {
 		
-		 boolean isHovered = isMouseOver(mouseX, mouseY);
+		 boolean isHovered = isMouseOver(mouseX, mouseY, playerX, playerY);
 		 
 		 if(isHovered || isChecked()) {
 		    	gc.setFill(Color.DARKGREEN);
@@ -128,9 +129,9 @@ public class Player {
 	}
 	
 	// SQUARE HITBOX 
-	public boolean isMouseOver(double mouseX, double mouseY) {
-	    return mouseX >= startingPlayerPositionX && mouseX <= startingPlayerPositionX + width &&
-	           mouseY >= startingPlayerPositionY && mouseY <= startingPlayerPositionY + height;
+	public boolean isMouseOver(double mouseX, double mouseY, double playerX, double playerY) {
+	    return mouseX >= playerX && mouseX <= playerX + width &&
+	           mouseY >=  playerY && mouseY <=  playerY + height;
 	}
 	  
 	public void onClick() {
@@ -138,10 +139,10 @@ public class Player {
 			action.run();
 	}
 	
-	// non capisco come fare il getter e setter custom con lombok 
-	public void lockedIn(double mouseX, double mouseY) {
+	// if the mouse is over the player, it will set checked to true, which will turn the color darker while hovering
+	public void lockedIn(double mouseX, double mouseY, double playerX, double playerY) {
 		
-		if(isMouseOver(mouseX, mouseY))
+		if(isMouseOver(mouseX, mouseY, playerX, playerY))
 			setChecked(true);
 	}
 	/*

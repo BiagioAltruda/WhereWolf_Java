@@ -81,7 +81,7 @@ public class JavaFXTestGame extends Application {
 		GameManager.instance.setPlayers(p1, p2, p3, p4);
 
 		// credo che assegnare lobbySize fin da subito sia meglio cosi non si deve
-		// chiamare ogni volta con GAMEMANAGER.INSTANCE.NEGRO...
+		// chiamare ogni volta con GAMEMANAGER.INSTANCE...
 		int lobbySize = GameManager.instance.getPlayers().size();
 
 		// VOTE BUTTON
@@ -96,8 +96,7 @@ public class JavaFXTestGame extends Application {
 			}
 
 			if (i == lobbySize) {
-				System.out
-						.println("You must select a player before voting, if you do not wish to vote you can abstain");
+				System.out.println("You must select a player before voting, if you do not wish to vote you can abstain");
 			}
 		});
 
@@ -114,14 +113,22 @@ public class JavaFXTestGame extends Application {
 
 			@Override
 			public void handle(MouseEvent e) {
-
+				
+				
 				if (voteButton.isMouseOver(e.getX(), e.getY())) {
 					voteButton.onClick();
 				}
 
 				for (int i = 0; i < lobbySize; i++) {
-
-					if (GameManager.instance.getPlayers().get(i).isMouseOver(e.getX(), e.getY())) {
+					
+					 Player player = GameManager.instance.getPlayers().get(i);
+					 
+					if (player.isMouseOver
+							(e.getX(), e.getY(),
+							player.getStartingPlayerPositionX(),
+							player.getStartingPlayerPositionY()
+							)
+						) {
 						GameManager.instance.getPlayers().get(i).onClick();
 
 						/*
@@ -206,6 +213,17 @@ public class JavaFXTestGame extends Application {
 				gc.setFont(new Font("Arial", 24));
 
 				for (int i = 0; i < lobbySize; i++) {
+					
+					/* 
+					 * NOTES, METHODS FOR SPAWNING WITHOUT OVERLAP 
+					 * - Poisson Disk Sampling
+					 * - Spatial Partitioning Optimization (e.g., Grid / Quadtree)
+					 * - Brute force ( barely matter for our sample size ( not even 20 ); 
+					 * 
+					 * brute force -> collision becomes something like +5 in width and height and will act as padding
+					 * 			   -> place object, check if there is collision, if yes retry, else place object till end.
+					 * 			   -> add control, after something like 10k attempts stop and give error or something
+					 */
 					// so we don't have to type the latter part of this line over and over again
 				    Player player = GameManager.instance.getPlayers().get(i);
 				    
