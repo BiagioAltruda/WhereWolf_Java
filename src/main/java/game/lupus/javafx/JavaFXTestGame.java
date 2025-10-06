@@ -233,15 +233,18 @@ public class JavaFXTestGame extends Application {
 					
 					// so we don't have to type the latter part of this line over and over again
 				    Player player = GameManager.instance.getPlayers().get(i);
-				    
+				   
 				   
 				    // Calculate position on circle
 				    double playerX = centerX + circleRadius * Math.cos(anglePerPlayer + (anglePerPlayer * i));
-				    double playerY = centerY + circleRadius * Math.sin(anglePerPlayer + (anglePerPlayer * i));					    
+				    double playerY = centerY + circleRadius * Math.sin(anglePerPlayer + (anglePerPlayer * i));	
 				    
 				    // drawing from the center rather than the top left
 				    double squareX = playerX - player.getWidth() / 2;
 				    double squareY = playerY - player.getHeight() / 2;
+				    
+				    player.setStartingPlayerPositionX(squareX);
+				    player.setStartingPlayerPositionY(squareY);
 				    
 				    // Draw username above the square
 				    gc.setFill(Color.BLACK);
