@@ -86,7 +86,7 @@ public class TurnManager {
     }
 
 
-    private void turnController() {
+    public void turnController() {
 
             //aggiungere un controllo sul timer 
         System.out.println("Prima del controllo");
@@ -103,6 +103,7 @@ public class TurnManager {
     private boolean allPlayersPassed() {
 
         //non entra qua dentro
+        this.allPassed.set(true);
         GameManager.instance.getPlayers().forEach(player -> { 
             System.out.println(player.getUsername() + " passed: " + player.hasPassed());
             if (!player.hasPassed()) { 
@@ -112,6 +113,8 @@ public class TurnManager {
             }
         });
 
+
+        System.out.println("All passed: " + allPassed.getAcquire());
         return allPassed.getAcquire();
     }
 
