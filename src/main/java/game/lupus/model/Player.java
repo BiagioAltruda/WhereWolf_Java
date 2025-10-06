@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 @Entity
 @Table(name = "players")
@@ -47,15 +48,52 @@ public class Player {
 	 * -----------------------------------------------------
 	 * START TESTING AREA
 	 * 
+	 * ** NOTES, WHEN SPLITTING THIS CLASS, SOMEHOW MAKE IT CLEANER, this is somewhat messy
 	 */
 	
-	private double playerX;
-	private double playerY;
-	private final int width = 100;
-	private final int height = 100;
+//	private double playerX;
+//	private double playerY;
 	
-	// name subject to change, checked is too see if the mouse is hovering or not
+	private final int width = 75;
+	private final int height = 75;
+	
+	
+	// diameter ( start and end )
+
+	/*
+	 * centerX - radius, centerX + radius, centerY - radius, centerY + radius ( diameter range ) 
+	 * we can draw squares using coordinates from diameter ( horizontal axis and vertical axis ) 
+	 * also, we make a check for collision, if there is always a collision we can make the squares smaller i guess
+	 */
+	
+	// temporary solution
+	
+	// window
+	private final int windowWidth = 1280;
+	private final int windowHeight = 720;
+		
+	// radius for the circle
+    double r = windowWidth / 6;
+    double radius = (windowHeight - r) / 2;
+		
+	private double startX = windowWidth * 0.3 - r;
+	private double endX = windowWidth * 0.3 + r;
+
+	private double startY = windowHeight * 0.5 - r;
+	private double endY = windowHeight * 0.5 + r;
+	
+	
+	// angle from 0 to 2π
+	double angle = 2 * Math.PI;
+
+	// Convert polar to Cartesian
+	double startingPlayerPositionX = windowWidth * 0.3 + radius * Math.cos(angle);
+	double startingPlayerPositionY = windowHeight * 0.5 + radius * Math.sin(angle);
+	
+
+ 	// name subject to change, checked is too see if the mouse is hovering or not
 	private boolean checked = false;
+
 	
 	private Runnable action = new Runnable(){
 		 @Override
@@ -73,9 +111,9 @@ public class Player {
 	        }
 	};
 
-	public void render(GraphicsContext gc, double mouseX, double mouseY) {
+	public void render(GraphicsContext gc, double mouseX, double mouseY, double playerX, double playerY) {
 		
-		 boolean isHovered = isMouseOver(mouseX, mouseY);
+		 boolean isHovered = isMouseOver(mouseX, mouseY, playerX, playerY);
 		 
 		 if(isHovered || isChecked()) {
 		    	gc.setFill(Color.DARKGREEN);
@@ -90,20 +128,20 @@ public class Player {
 	}
 	
 	// SQUARE HITBOX 
-	public boolean isMouseOver(double mouseX, double mouseY) {
+	public boolean isMouseOver(double mouseX, double mouseY, double playerX, double playerY) {
 	    return mouseX >= playerX && mouseX <= playerX + width &&
-	           mouseY >= playerY && mouseY <= playerY + height;
+	           mouseY >=  playerY && mouseY <=  playerY + height;
 	}
-	  
+
 	public void onClick() {
 		if (action != null)
 			action.run();
 	}
 	
-	// non capisco come fare il getter e setter custom con lombok 
-	public void lockedIn(double mouseX, double mouseY) {
+	// if the mouse is over the player, it will set checked to true, which will turn the color darker while hovering
+	public void lockedIn(double mouseX, double mouseY, double playerX, double playerY) {
 		
-		if(isMouseOver(mouseX, mouseY))
+		if(isMouseOver(mouseX, mouseY, playerX, playerY))
 			setChecked(true);
 	}
 	/*
