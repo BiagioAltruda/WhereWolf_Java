@@ -100,6 +100,10 @@ public class JavaFXTestGame extends Application {
 			}
 		});
 
+		
+		/* 
+		 * MOUSE METHODS 
+		 */
 		// JavaFX offers mouse properties yayy huh? /
 		canvas.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
@@ -162,6 +166,9 @@ public class JavaFXTestGame extends Application {
 //				voteButton.onClick();
 //				} 
 //			});
+		
+		
+		// ---------------------------------------------------------------------------------- END MOUSE METHODS
 
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("NEGRO");
@@ -169,18 +176,24 @@ public class JavaFXTestGame extends Application {
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 
-		// Animation loop
+		
+		
+		
+
+		
+		
+		//------------------------------ START ANIMATION TIMER
 		new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
 
-				// w and h goes inside AnimationTimer because when the canvas resizes it gets
-				// updated
+				// w and h goes inside AnimationTimer because when the canvas resizes it gets updated
 				// otherwise it would be blank
 				double w = canvas.getWidth();
 				double h = canvas.getHeight();
 
+				// CHANGE BACKGROUND DAY/NIGHT
 				if (TurnManager.instance.isNight()) {
 					gc.setFill(Color.DARKSLATEBLUE);
 					gc.fillRect(0, 0, w, h);
@@ -202,34 +215,29 @@ public class JavaFXTestGame extends Application {
 
 				gc.setFill(Color.WHITE);
 
-				// x is roughly 12.8, y is 36?
+				// time, manche 
 				gc.fillText(TurnManager.instance.timeController() + "", w * 0.01, h * 0.05);
-
-				// x is roughly 12.8, y shoud be 72
 				gc.fillText("Manche : " + TurnManager.instance.getCurrentTurn() + "", w * 0.01, h * 0.1);
 
+				
+				// ** delete later
 				voteButton.render(gc, mouseX, mouseY);
 
 				gc.setFont(new Font("Arial", 24));
-
+				
+				// angles are the same for each player
+				double fullCircle = 2 * Math.PI;
+				double anglePerPlayer = fullCircle/lobbySize;
+				
 				for (int i = 0; i < lobbySize; i++) {
 					
-					/* 
-					 * NOTES, METHODS FOR SPAWNING WITHOUT OVERLAP 
-					 * - Poisson Disk Sampling
-					 * - Spatial Partitioning Optimization (e.g., Grid / Quadtree)
-					 * - Brute force ( barely matter for our sample size ( not even 20 ); 
-					 * 
-					 * brute force -> collision becomes something like +5 in width and height and will act as padding
-					 * 			   -> place object, check if there is collision, if yes retry, else place object till end.
-					 * 			   -> add control, after something like 10k attempts stop and give error or something
-					 */
 					// so we don't have to type the latter part of this line over and over again
 				    Player player = GameManager.instance.getPlayers().get(i);
 				    
+				   
 				    // Calculate position on circle
-				    double playerX = centerX + circleRadius * Math.cos(player.getAngle());
-				    double playerY = centerY + circleRadius * Math.sin(player.getAngle());
+				    double playerX = centerX + circleRadius * Math.cos(anglePerPlayer + (anglePerPlayer * i));
+				    double playerY = centerY + circleRadius * Math.sin(anglePerPlayer + (anglePerPlayer * i));					    
 				    
 				    // drawing from the center rather than the top left
 				    double squareX = playerX - player.getWidth() / 2;

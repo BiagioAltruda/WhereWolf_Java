@@ -82,10 +82,9 @@ public class Player {
 	private double startY = windowHeight * 0.5 - r;
 	private double endY = windowHeight * 0.5 + r;
 	
-	Random rand = new Random();
 	
-	// Random angle from 0 to 2π
-	double angle = rand.nextDouble() * 2 * Math.PI;
+	// angle from 0 to 2π
+	double angle = 2 * Math.PI;
 
 	// Convert polar to Cartesian
 	double startingPlayerPositionX = windowWidth * 0.3 + radius * Math.cos(angle);
@@ -133,7 +132,7 @@ public class Player {
 	    return mouseX >= playerX && mouseX <= playerX + width &&
 	           mouseY >=  playerY && mouseY <=  playerY + height;
 	}
-	  
+
 	public void onClick() {
 		if (action != null)
 			action.run();
