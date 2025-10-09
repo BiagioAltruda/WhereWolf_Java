@@ -8,7 +8,9 @@ import game.lupus.javafx.buttons.Button;
 import game.lupus.manager.GameManager;
 import game.lupus.manager.TurnManager;
 import game.lupus.model.Player;
+import game.lupus.model.roles.Contadino;
 import game.lupus.model.roles.Lupo;
+import game.lupus.utils.GlobalVar;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -23,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class JavaFXTestGame extends Application {
+
 
 	// window
 	private final int windowWidth = 1280;
@@ -57,49 +60,36 @@ public class JavaFXTestGame extends Application {
 		p1.setUsername("Bardo");
 		p1.setId(1);
 		p1.setPassed(false);
-		p1.setAngle((rand.nextDouble() * 2 * Math.PI));
+		p1.setRole(new Contadino());
+		//p1.setAngle((rand.nextDouble() * 2 * Math.PI));
 
 		Player p2 = new Player();
 		p2.setUsername("Lupo");
 		p2.setId(2);
 		p2.setRole(new Lupo());
 		p2.setPassed(true);
-		p2.setAngle((rand.nextDouble() * 2 * Math.PI));
+		//p2.setAngle((rand.nextDouble() * 2 * Math.PI));
 
 		Player p3 = new Player();
 		p3.setUsername("Luce");
 		p3.setId(3);
 		p3.setPassed(true);
-		p3.setAngle((rand.nextDouble() * 2 * Math.PI));
+		//p3.setAngle((rand.nextDouble() * 2 * Math.PI));
 
 		Player p4 = new Player();
 		p4.setUsername("Biagi");
 		p4.setId(4);
 		p4.setPassed(true);
-		p4.setAngle((rand.nextDouble() * 2 * Math.PI));
+		//p4.setAngle((rand.nextDouble() * 2 * Math.PI));
 
 		GameManager.instance.setPlayers(p1, p2, p3, p4);
 
 		// credo che assegnare lobbySize fin da subito sia meglio cosi non si deve
 		// chiamare ogni volta con GAMEMANAGER.INSTANCE...
-		int lobbySize = GameManager.instance.getPlayers().size();
+		
 
 		// VOTE BUTTON
-		Button voteButton = new Button(200, 100, 70, 35, "Vote", () -> {
-			int i;
-			for (i = 0; i < lobbySize; i++) {
-				if (GameManager.instance.getPlayers().get(i).isChecked()) {
-					System.out.println("You voted " + GameManager.instance.getPlayers().get(i).getUsername());
-					p1.setPassed(true);
-                    TurnManager.instance.turnController();
-					break;
-				}
-			}
-
-			if (i == lobbySize) {
-				System.out.println("You must select a player before voting, if you do not wish to vote you can abstain");
-			}
-		});
+		
 
 		
 		/* 
@@ -120,12 +110,11 @@ public class JavaFXTestGame extends Application {
 			public void handle(MouseEvent e) {
 				
 				
-				if (voteButton.isMouseOver(e.getX(), e.getY())) {
-					voteButton.onClick();
+				if (GlobalVar.voteButton.isMouseOver(e.getX(), e.getY())) {
+					GlobalVar.voteButton.onClick();
 				}
 
-				for (int i = 0; i < lobbySize; i++) {
-					
+				for (int i = 0; i < GlobalVar.lobbySize; i++) {
 					 Player player = GameManager.instance.getPlayers().get(i);
 					 
 					if (player.isMouseOver
@@ -140,7 +129,7 @@ public class JavaFXTestGame extends Application {
 						 * non mi viene in mente altro, siccome lobbySize non toccherà nemmeno i 2 zeri,
 						 * un O n al quadrato non dovrebbe rallentare
 						 */
-						for (int j = 0; j < lobbySize; j++) {
+						for (int j = 0; j < GlobalVar.lobbySize; j++) {
 							// if i and j are the same, therefore the same player, nothing happens
 							// otherwise it sets it's isChecked to false;
 							if (j != i)
@@ -222,15 +211,19 @@ public class JavaFXTestGame extends Application {
 
 				
 				// ** delete later
-				voteButton.render(gc, mouseX, mouseY);
+				if(GameManager.instance.getPlayers().get(0).getRole() instanceof Contadino && TurnManager.instance.isNight()) {
+
+                } else {
+                    GlobalVar.voteButton.render(gc, mouseX, mouseY);
+                }
 
 				gc.setFont(new Font("Arial", 24));
 				
 				// angles are the same for each player
 				double fullCircle = 2 * Math.PI;
-				double anglePerPlayer = fullCircle/lobbySize;
+				double anglePerPlayer = fullCircle/GlobalVar.lobbySize;
 				
-				for (int i = 0; i < lobbySize; i++) {
+				for (int i = 0; i < GlobalVar.lobbySize; i++) {
 					
 					// so we don't have to type the latter part of this line over and over again
 				    Player player = GameManager.instance.getPlayers().get(i);

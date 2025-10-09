@@ -2,6 +2,7 @@ package game.lupus.model.roles;
 
 import game.lupus.enums.ActionType;
 import game.lupus.enums.Faction;
+import game.lupus.javafx.buttons.NightButton;
 import game.lupus.model.Player;
 import jakarta.persistence.Column;
 
@@ -14,15 +15,20 @@ public class Lupo extends Role {
     private final boolean magic = false;
     private final String description = "Lupo Mannaro, ogni notte a partire dalla seconda, decide un giocatore da eliminare";
 
+    
+
     @Override
     public void vote() {
 
     }
 
+    //attack a player
     @Override
     public void nightAction(ActionType actionType, Player... player) {
-
+        
     }
+
+
 
 
 }

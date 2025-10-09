@@ -26,4 +26,8 @@ public class GameManager {
         return players;
     }
 
+    public void setRoles(){
+        // Implement role assignment logic here
+    }
+
 }

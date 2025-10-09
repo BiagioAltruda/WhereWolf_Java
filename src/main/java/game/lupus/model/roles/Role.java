@@ -1,6 +1,7 @@
 package game.lupus.model.roles;
 
 import game.lupus.enums.ActionType;
+import game.lupus.enums.RoleName;
 import game.lupus.model.Player;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,6 +23,8 @@ public abstract class Role {
     private Integer id;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Player> players = new ArrayList<>();
+
+    private RoleName roleName;
 
     public abstract void vote();
     public abstract void nightAction(ActionType actionType, Player... player);

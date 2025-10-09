@@ -15,4 +15,5 @@ public class LupusApplication {
 		javafx.application.Application.launch(JavaFXTestGame.class, args);
 	}
 
+
 }

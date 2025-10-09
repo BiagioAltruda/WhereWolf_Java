@@ -1,5 +1,6 @@
 package game.lupus.javafx.buttons;
 
+import game.lupus.enums.RoleName;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -12,6 +13,8 @@ public class Button {
 	private Runnable action;
 	
 	private boolean isPressed = false;
+
+	private RoleName roleName;
 
 	public Button(double x, double y, double width, double height, String text, Runnable action) {
 		super();
@@ -113,6 +116,13 @@ public class Button {
 		this.isPressed = isPressed;
 	}
 	
+	public RoleName getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(RoleName roleName) {
+		this.roleName = roleName;
+	}
 
 	
 }

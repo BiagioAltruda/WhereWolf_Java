@@ -43,9 +43,18 @@ public class TurnManager {
         if(isNight)
         {
             // implementare controller API con metodi per la notte
+            /*
+            for (var player : GameManager.instance.getPlayers()) {
+                if(player.isAlive() && !player.getRole().getRoleName().toString().equals("CITTADINO"))
+                player.getNightButton().showButton();
+            } */
         } 
         else 
         {
+           /*  for (var player : GameManager.instance.getPlayers()) {
+                if(player.isAlive() && !player.getRole().getRoleName().toString().equals("CITTADINO"))
+                player.getNightButton().hideButton();
+            }*/
             // implementare controller API con metodi per il giorno
         }
         turnController();

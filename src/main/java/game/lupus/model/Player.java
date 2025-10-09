@@ -2,6 +2,8 @@ package game.lupus.model;
 
 import game.lupus.enums.Status;
 import game.lupus.javafx.buttons.Button;
+import game.lupus.javafx.buttons.NightButton;
+import game.lupus.manager.TurnManager;
 import game.lupus.model.roles.Role;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -93,6 +95,7 @@ public class Player {
  	// name subject to change, checked is too see if the mouse is hovering or not
 	private boolean checked = false;
 
+
 	
 	private Runnable action = new Runnable(){
 		 @Override
@@ -135,6 +138,7 @@ public class Player {
 	public void onClick() {
 		if (action != null)
 			action.run();
+			
 	}
 	
 	// if the mouse is over the player, it will set checked to true, which will turn the color darker while hovering
