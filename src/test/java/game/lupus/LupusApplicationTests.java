@@ -8,6 +8,7 @@ class LupusApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
 
 }
